@@ -8,11 +8,11 @@ const router = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 const limiter = require('./middlewares/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const NotFoundError = require('./errors/notFoundError');
+
 require('dotenv').config();
 
-const { DB_PATH } = process.env;
-const { PORT } = process.env;
+const { DB_PATH = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 app.use(helmet());
 mongoose.connect(DB_PATH, {
@@ -28,12 +28,9 @@ app.use(requestLogger);
 app.use(limiter);
 app.use('/', router);
 
-app.use('*', (req, res, next) => {
-  next(new NotFoundError('Запрашиваемый ресурс не найден'));
-});
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
-app.use(errorLogger);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

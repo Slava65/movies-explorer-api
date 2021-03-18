@@ -62,8 +62,11 @@ const deleteMovie = (req, res, next) => {
           new ForbiddenError('Удалить видео может только его владелец'),
         );
       }
-      Movie.deleteOne(movie).then(() => res.send({ data: movie }));
-      return res.send({ data: movie });
+      return Movie.deleteOne(movie)
+        .then(() => {
+          res.send({ data: movie });
+        })
+        .catch(next);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
