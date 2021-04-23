@@ -5,7 +5,8 @@
   "main": "/app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "deploy": "npm run build && scp -r ./build/* mesto@84.201.168.75:/home/mesto/movies-explorer-frontend"
   },
   "repository": {
     "type": "git",
