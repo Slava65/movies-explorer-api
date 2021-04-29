@@ -34,9 +34,8 @@ const createUser = (req, res, next) => {
         email, name,
       } = req.body;
       const password = hash;
-
       return User.create({
-        name, email, password,
+        email, password, name,
       });
     })
     .then((user) => {
