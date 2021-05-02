@@ -22,7 +22,7 @@ const getUserInfo = (req, res, next) => {
 
 const createUser = (req, res, next) => {
   const { email } = req.body;
-  User.findOne({ email })
+  return User.findOne({ email })
     .then((user) => {
       if (user) {
         next(new ConflictError('E-mail уже используется'));

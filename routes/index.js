@@ -11,7 +11,7 @@ router.post('/signin', loginValidator, login);
 router.post('/signup', registerValidator, createUser);
 router.use('/users', auth, userRouter);
 router.use('/movies', auth, movieRouter);
-router.use('*', auth, (req, res, next) => {
+router.use('*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
 module.exports = router;
