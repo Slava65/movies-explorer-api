@@ -10,7 +10,7 @@ require('dotenv').config();
 const { SECRET = 'devKey' } = process.env;
 
 const getUserInfo = (req, res, next) => {
-  User.findById(req.params._id)
+  User.findById(req.user._id)
     .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -35,7 +35,7 @@ const createUser = (req, res, next) => {
       } = req.body;
       const password = hash;
       return User.create({
-        email, password, name,
+        name, email, password,
       });
     })
     .then((user) => {
@@ -70,7 +70,6 @@ const updateUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET, {

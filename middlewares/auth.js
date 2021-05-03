@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const { SECRET = 'devkey' } = process.env;
+const { SECRET = 'devKey' } = process.env;
 
 const auth = (req, res, next) => {
-  console.log(req.headers);
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return res.status(401).send({ message: 'Необходима авторизация1' });
