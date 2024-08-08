@@ -11,13 +11,14 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
 const { DB_PATH = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
 app.use(helmet());
 mongoose.connect(DB_PATH, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 app.use(cors());
 app.options('*', cors());
